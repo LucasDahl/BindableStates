@@ -12,21 +12,55 @@ struct ContentView: View {
     
     // State variable
     @State var firstName = ""
+    @State var lastName = ""
     
     var body: some View {
         
         NavigationView {
             
+            // Holds all the elements in a stack
             VStack {
                 
-                // Creates a text field
-                TextField("First Name", text: $firstName)
+                
+                VStack {
+                    
+                    // Vstack for user input
+                    VStack {
+                        
+                        // Creates a text field First and last name
+                        Group {
+                            TextField("First Name", text: $firstName).padding(12)
+                            }.background(Color.white)
+                            .clipShape(RoundedRectangle(cornerRadius: 5))
+                            .shadow(radius: 5)
+                        
+                        Group {
+                            TextField("Last Name", text: $lastName).padding(12)
+                            }.background(Color.white)
+                            .clipShape(RoundedRectangle(cornerRadius: 5))
+                            .shadow(radius: 5)
+        
+                        // Button for creating a user
+                        Button(action: {
+                            
+                        }) {
+                            Group {
+                                Text("Create User")
+                                    .foregroundColor(.white)
+                                    .padding(12)
+                            }.background(Color.blue)
+                                .clipShape(RoundedRectangle(cornerRadius: 5))
+                        }
+                        
+                    }.padding(12) // End Vstack for user input
+                    
+                }.background(Color.gray) // End Vstack
                 
                 // Placeholder
                 List {
                     Text("EMPTY ROW")
                 }
-            } // End Vstack
+            }.navigationBarTitle("Credit Card Form") // End Vstack
             
         } // End NavigationView
         
