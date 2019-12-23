@@ -13,6 +13,7 @@ struct ContentView: View {
     // State variable
     @State var firstName = ""
     @State var lastName = ""
+    @State var users = [String]()
     
     var body: some View {
         
@@ -29,13 +30,15 @@ struct ContentView: View {
                         
                         // Creates a text field First and last name
                         Group {
-                            TextField("First Name", text: $firstName).padding(12)
+                            TextField("First Name", text: $firstName)
+                                .padding(12)
                             }.background(Color.white)
                             .clipShape(RoundedRectangle(cornerRadius: 5))
                             .shadow(radius: 5)
                         
                         Group {
-                            TextField("Last Name", text: $lastName).padding(12)
+                            TextField("Last Name", text: $lastName)
+                                .padding(12)
                             }.background(Color.white)
                             .clipShape(RoundedRectangle(cornerRadius: 5))
                             .shadow(radius: 5)
@@ -43,13 +46,20 @@ struct ContentView: View {
                         // Button for creating a user
                         Button(action: {
                             
+                            self.users.append("\(self.firstName) \(self.lastName)")
+                            
+                            // Set the fields back to blank
+                            self.firstName = ""
+                            self.lastName = ""
+                            
                         }) {
                             Group {
                                 Text("Create User")
                                     .foregroundColor(.white)
                                     .padding(12)
-                            }.background(Color.blue)
+                            }.background((firstName.count > 0 && lastName.count > 0 ? Color.blue : Color.gray))
                                 .clipShape(RoundedRectangle(cornerRadius: 5))
+                            .shadow(radius: 5)
                         }
                         
                     }.padding(12) // End Vstack for user input
@@ -57,10 +67,17 @@ struct ContentView: View {
                 }.background(Color.gray) // End Vstack
                 
                 // Placeholder
-                List {
-                    Text("EMPTY ROW")
+                List(users, id: \.self) {
+                    Text($0)
                 }
-            }.navigationBarTitle("Credit Card Form") // End Vstack
+                }.navigationBarTitle("Credit Card Form")
+                .navigationBarItems(leading: HStack {
+                    // Monitor variables
+                    Text("First Name:")
+                    Text(firstName)
+                    Text("Last Name")
+                    Text(lastName)
+                })
             
         } // End NavigationView
         
