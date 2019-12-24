@@ -43,24 +43,54 @@ struct ContentView: View {
                             .clipShape(RoundedRectangle(cornerRadius: 5))
                             .shadow(radius: 5)
         
-                        // Button for creating a user
-                        Button(action: {
+                        HStack {
                             
-                            self.users.append("\(self.firstName) \(self.lastName)")
+                            // Button for creating a user
+                            Button(action: {
+                                
+                                if self.firstName.count > 0 && self.lastName.count > 0 {
+                                    
+                                    self.users.append("\(self.firstName) \(self.lastName)")
+                                    
+                                    // Set the fields back to blank
+                                    self.firstName = ""
+                                    self.lastName = ""
+                                    
+                                } else {
+                                    return
+                                }
+                                
+                            }) {
+                                Group {
+                                    Text("Create User")
+                                        .foregroundColor(.white)
+                                        .padding(12)
+                                }.background((firstName.count > 0 && lastName.count > 0 ? Color.blue : Color.gray))
+                                    .clipShape(RoundedRectangle(cornerRadius: 5))
+                                .shadow(radius: 5)
+                            }
                             
-                            // Set the fields back to blank
-                            self.firstName = ""
-                            self.lastName = ""
-                            
-                        }) {
-                            Group {
-                                Text("Create User")
-                                    .foregroundColor(.white)
-                                    .padding(12)
-                            }.background((firstName.count > 0 && lastName.count > 0 ? Color.blue : Color.gray))
+                            Button(action: {
+                                
+                                // Clear the array
+                                if self.users.count > 0 {
+                                    self.users.removeAll()
+                                } else {
+                                    return
+                                }
+                                
+                            }) {
+                                Group {
+                                    Text("Delete List")
+                                        .foregroundColor(.white)
+                                        .padding(12)
+                                }.background(Color.red)
                                 .clipShape(RoundedRectangle(cornerRadius: 5))
-                            .shadow(radius: 5)
+                                .shadow(radius: 5)
+                            }
+                            
                         }
+                        
                         
                     }.padding(12) // End Vstack for user input
                     
